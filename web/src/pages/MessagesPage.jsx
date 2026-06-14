@@ -17,6 +17,7 @@ export default function MessagesPage() {
   } = useAppContext();
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [draft, setDraft] = useState("");
+  const [messageError, setMessageError] = useState("");
 
   const peerOptions = useMemo(() => {
     const base = new Set(conversationPeers);
@@ -43,12 +44,17 @@ export default function MessagesPage() {
     ? getUserById(effectiveSelectedUserId)
     : null;
 
-  const send = () => {
+  const send = async () => {
     if (!effectiveSelectedUserId) {
       return;
     }
-    sendMessageToUser(effectiveSelectedUserId, draft);
-    setDraft("");
+    try {
+      setMessageError("");
+      await sendMessageToUser(effectiveSelectedUserId, draft);
+      setDraft("");
+    } catch (error) {
+      setMessageError(error.message || "发送失败，请稍后重试。");
+    }
   };
 
   return (
@@ -143,6 +149,11 @@ export default function MessagesPage() {
                   发送
                 </button>
               </div>
+              {messageError ? (
+                <p className="mt-2 rounded-lg bg-violet-50 px-3 py-2 text-[11px] text-violet-700">
+                  {messageError}
+                </p>
+              ) : null}
             </>
           ) : (
             <p className="text-sm text-stone-500">请选择一个联系人开始沟通。</p>

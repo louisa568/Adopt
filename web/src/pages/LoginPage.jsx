@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [code, setCode] = useState("");
   const [privacyAgreed, setPrivacyAgreed] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const redirectTo = useMemo(
     () => location.state?.redirectTo || "/home",
@@ -44,7 +45,7 @@ export default function LoginPage() {
     setMessage("验证码已发送，测试码默认填充为 123456。");
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!phone.trim()) {
       setMessage("请输入手机号。");
       return;
@@ -60,8 +61,16 @@ export default function LoginPage() {
       return;
     }
 
-    login({ phone: phone.trim() });
-    navigate(redirectTo, { replace: true });
+    try {
+      setIsSubmitting(true);
+      setMessage("");
+      await login({ phone: phone.trim() });
+      navigate(redirectTo, { replace: true });
+    } catch (error) {
+      setMessage(error.message || "登录失败，请检查 Supabase 配置");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -113,9 +122,10 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={handleLogin}
-            className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+            disabled={isSubmitting}
+            className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99] disabled:opacity-60"
           >
-            立即登录
+            {isSubmitting ? "登录中..." : "立即登录"}
           </button>
         </div>
 

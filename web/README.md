@@ -1,16 +1,54 @@
-# React + Vite
+# 暖爪领养（Web）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Tailwind CSS + Supabase 的移动端优先 MVP。
 
-Currently, two official plugins are available:
+## 1) 本地启动
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## 2) Supabase 配置
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. 复制环境变量模板：
 
-## Expanding the ESLint configuration
+```bash
+cp .env.example .env
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. 在 `.env` 中填入：
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+> 注意：前端只能使用 **anon public key**。  
+> `sb_secret_*` 这类密钥属于高权限密钥，不应放到前端代码或 `.env` 前端变量中。
+
+## 3) 初始化数据库
+
+在 Supabase 的 SQL Editor 里执行：
+
+`supabase/schema.sql`
+
+该脚本会创建并初始化以下表：
+
+- `users`
+- `pets`
+- `applications`
+- `messages`
+- `revisit_logs`
+
+并写入一批基础示例数据。
+
+## 4) 当前数据流
+
+应用已将原先写死的 Mock 主流程替换为 Supabase 实时读写：
+
+- 登录/注册（手机号）
+- 用户资料/实名认证状态
+- 首页宠物信息流
+- 发布宠物
+- 领养申请
+- 消息会话
+- 云回访记录

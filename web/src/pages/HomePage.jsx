@@ -14,7 +14,7 @@ const initialFilters = {
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { pets, getUserById } = useAppContext();
+  const { pets, getUserById, isDataLoading, appError } = useAppContext();
   const [activeTab, setActiveTab] = useState("全部");
   const [filters, setFilters] = useState(initialFilters);
 
@@ -156,6 +156,23 @@ export default function HomePage() {
         </section>
       </header>
 
+      {appError ? (
+        <section className="px-3 pt-3">
+          <div className="rounded-2xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs text-violet-700">
+            {appError}
+          </div>
+        </section>
+      ) : null}
+
+      {isDataLoading ? (
+        <section className="px-3 py-3">
+          <div className="rounded-2xl bg-white p-5 text-center text-sm text-stone-500 shadow-sm">
+            正在加载宠物信息...
+          </div>
+        </section>
+      ) : null}
+
+      {!isDataLoading ? (
       <section className="columns-2 gap-3 px-3 py-3">
         {filteredPets.map((pet) => (
           <article key={pet.id} className="mb-3 break-inside-avoid rounded-2xl bg-white shadow-sm">
@@ -219,8 +236,9 @@ export default function HomePage() {
           </article>
         ))}
       </section>
+      ) : null}
 
-      {filteredPets.length === 0 ? (
+      {!isDataLoading && filteredPets.length === 0 ? (
         <section className="px-4 pb-24">
           <div className="rounded-2xl border border-dashed border-violet-200 bg-white p-6 text-center shadow-sm">
             <p className="text-3xl">🐾</p>

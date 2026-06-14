@@ -7,11 +7,16 @@ export default function VerificationGate({ title = "需要完成实名认证" })
   const [message, setMessage] = useState("");
 
   const handleVerify = async () => {
-    setIsLoading(true);
-    setMessage("");
-    await completeVerification();
-    setIsLoading(false);
-    setMessage("实名认证已完成，现在可以继续操作。");
+    try {
+      setIsLoading(true);
+      setMessage("");
+      await completeVerification();
+      setMessage("实名认证已完成，现在可以继续操作。");
+    } catch (error) {
+      setMessage(error.message || "实名认证失败，请稍后重试。");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

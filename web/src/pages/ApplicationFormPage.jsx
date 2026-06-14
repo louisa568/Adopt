@@ -21,6 +21,7 @@ export default function ApplicationFormPage() {
   const [acceptedVisit, setAcceptedVisit] = useState(false);
   const [acceptedNoAbandon, setAcceptedNoAbandon] = useState(false);
   const [submitMsg, setSubmitMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const pet = useMemo(() => pets.find((item) => item.id === petId), [petId, pets]);
 
@@ -42,19 +43,27 @@ export default function ApplicationFormPage() {
     );
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!acceptedVisit || !acceptedNoAbandon) {
       setSubmitMsg("请先勾选两项承诺后再提交。");
       return;
     }
 
-    submitApplication({
-      petId: pet.id,
-      petName: pet.name,
-      ...form,
-    });
-    setSubmitMsg("申请已发送给送养人，请留意后续沟通通知。");
+    try {
+      setIsSubmitting(true);
+      setSubmitMsg("");
+      await submitApplication({
+        petId: pet.id,
+        petName: pet.name,
+        ...form,
+      });
+      setSubmitMsg("申请已发送给送养人，请留意后续沟通通知。");
+    } catch (error) {
+      setSubmitMsg(error.message || "提交失败，请稍后重试。");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -144,9 +153,10 @@ export default function ApplicationFormPage() {
 
         <button
           type="submit"
-          className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+          disabled={isSubmitting}
+          className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99] disabled:opacity-60"
         >
-          提交申请
+          {isSubmitting ? "提交中..." : "提交申请"}
         </button>
 
         {submitMsg ? (

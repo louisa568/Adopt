@@ -21,8 +21,9 @@ export default function PublishPage() {
   });
   const [agreed, setAgreed] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!form.name || !form.reason || !form.weakness || !form.district) {
@@ -35,38 +36,46 @@ export default function PublishPage() {
       return;
     }
 
-    publishPet({
-      name: form.name,
-      district: form.district,
-      category: form.category,
-      gender: form.gender,
-      ageGroup: form.ageGroup,
-      sterilized: form.sterilized === "已绝育",
-      vaccinated: form.vaccinated === "已接种",
-      dewormed: form.dewormed === "已驱虫",
-      urgent: form.urgent,
-      tags: [form.category, form.ageGroup, form.urgent ? "急寻领养" : "送养中"],
-      story: form.reason,
-      requirements: ["限同城领养", "接受云回访", "线上签署电子协议"],
-      images: form.imageUrl ? [form.imageUrl] : undefined,
-    });
+    try {
+      setIsSubmitting(true);
+      setMessage("");
+      await publishPet({
+        name: form.name,
+        district: form.district,
+        category: form.category,
+        gender: form.gender,
+        ageGroup: form.ageGroup,
+        sterilized: form.sterilized === "已绝育",
+        vaccinated: form.vaccinated === "已接种",
+        dewormed: form.dewormed === "已驱虫",
+        urgent: form.urgent,
+        tags: [form.category, form.ageGroup, form.urgent ? "急寻领养" : "送养中"],
+        story: form.reason,
+        requirements: ["限同城领养", "接受云回访", "线上签署电子协议"],
+        images: form.imageUrl ? [form.imageUrl] : undefined,
+      });
 
-    setMessage("发布成功，已进入首页信息流。");
-    setForm({
-      name: "",
-      category: "猫",
-      gender: "公",
-      ageGroup: "幼年",
-      sterilized: "未绝育",
-      vaccinated: "待接种",
-      dewormed: "已驱虫",
-      reason: "",
-      weakness: "",
-      district: "",
-      imageUrl: "",
-      urgent: false,
-    });
-    setAgreed(false);
+      setMessage("发布成功，已进入首页信息流。");
+      setForm({
+        name: "",
+        category: "猫",
+        gender: "公",
+        ageGroup: "幼年",
+        sterilized: "未绝育",
+        vaccinated: "待接种",
+        dewormed: "已驱虫",
+        reason: "",
+        weakness: "",
+        district: "",
+        imageUrl: "",
+        urgent: false,
+      });
+      setAgreed(false);
+    } catch (error) {
+      setMessage(error.message || "发布失败，请稍后重试。");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -202,9 +211,10 @@ export default function PublishPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+              disabled={isSubmitting}
+              className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99] disabled:opacity-60"
             >
-              提交发布
+              {isSubmitting ? "提交中..." : "提交发布"}
             </button>
 
             {message ? (
