@@ -12,3 +12,12 @@ body {
   background: #fff9f1;
   color: #3d2c1d;
 }
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
