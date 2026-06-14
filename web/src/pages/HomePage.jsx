@@ -67,8 +67,8 @@ export default function HomePage() {
   }, [activeTab, filters, pets]);
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] pb-28">
-      <header className="sticky top-0 z-10 border-b border-orange-100 bg-[#fff8f1]/95 px-4 py-3 backdrop-blur">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] pb-28">
+      <header className="sticky top-0 z-10 border-b border-violet-100 bg-[#f5f6fb]/95 px-4 py-3 backdrop-blur">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-stone-500">当前城市</p>
@@ -91,7 +91,7 @@ export default function HomePage() {
               onClick={() => setActiveTab(tab)}
               className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition active:scale-95 ${
                 activeTab === tab
-                  ? "bg-orange-500 text-white"
+                  ? "bg-violet-500 text-white"
                   : "bg-white text-stone-600 shadow-sm"
               }`}
             >
@@ -106,7 +106,7 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => setFilters(initialFilters)}
-              className="rounded-lg bg-orange-50 px-2 py-1 text-[11px] text-orange-700 active:scale-95"
+              className="rounded-lg bg-violet-50 px-2 py-1 text-[11px] text-violet-700 active:scale-95"
             >
               重置
             </button>
@@ -188,7 +188,7 @@ export default function HomePage() {
                   {pet.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-orange-50 px-2 py-0.5 text-[10px] text-orange-700"
+                      className="rounded-full bg-violet-50 px-2 py-0.5 text-[10px] text-violet-700"
                     >
                       {tag}
                     </span>
@@ -201,7 +201,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => navigate(`/users/${pet.publisherId}`)}
-                className="flex w-full items-center gap-2 rounded-xl border border-orange-100 px-2 py-2 text-left active:scale-[0.99]"
+                className="flex w-full items-center gap-2 rounded-xl border border-violet-100 px-2 py-2 text-left active:scale-[0.99]"
               >
                 <img
                   src={getUserById(pet.publisherId)?.avatar}
@@ -222,7 +222,7 @@ export default function HomePage() {
 
       {filteredPets.length === 0 ? (
         <section className="px-4 pb-24">
-          <div className="rounded-2xl border border-dashed border-orange-200 bg-white p-6 text-center shadow-sm">
+          <div className="rounded-2xl border border-dashed border-violet-200 bg-white p-6 text-center shadow-sm">
             <p className="text-3xl">🐾</p>
             <p className="mt-2 text-sm text-stone-600">暂时没有符合条件的宠物，试试切换筛选标签。</p>
           </div>
@@ -241,7 +241,7 @@ function FilterSelect({ label, value, options, onChange }) {
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full rounded-xl border border-orange-100 bg-orange-50/40 px-2 py-1.5 text-xs text-stone-700 outline-none"
+        className="w-full rounded-xl border border-violet-100 bg-violet-50/60 px-2 py-1.5 text-xs text-stone-700 outline-none"
       >
         {options.map((option) => (
           <option key={option} value={option}>

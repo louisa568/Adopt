@@ -22,13 +22,13 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 pb-6 pt-4">
-      <section className="relative isolate flex min-h-[72vh] flex-col justify-between overflow-hidden rounded-[2rem] bg-gradient-to-b from-[#ffca8d] via-[#ffe3be] to-[#fff6e8] px-5 py-8 shadow-md transition-all duration-300">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 pb-6 pt-4">
+      <section className="relative isolate flex min-h-[72vh] flex-col justify-between overflow-hidden rounded-[2rem] bg-gradient-to-b from-[#f4f2ff] via-[#ede9fe] to-[#ffffff] px-5 py-8 shadow-md transition-all duration-300">
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/45 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 -left-10 h-44 w-44 rounded-full bg-orange-200/55 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -left-10 h-44 w-44 rounded-full bg-violet-200/55 blur-3xl" />
 
         <header className="relative space-y-4 text-center">
-          <p className="mx-auto inline-flex rounded-full border border-white/60 bg-white/60 px-3 py-1 text-xs font-medium text-orange-700 shadow-sm">
+          <p className="mx-auto inline-flex rounded-full border border-white/70 bg-white/70 px-3 py-1 text-xs font-medium text-violet-700 shadow-sm">
             NuanZhua Adoption
           </p>
           <h1 className="text-3xl font-semibold leading-tight tracking-tight text-stone-800">
@@ -45,14 +45,14 @@ export default function LandingPage() {
           <button
             type="button"
             onClick={() => navigate("/login")}
-            className="w-full rounded-2xl bg-orange-500 px-4 py-3 text-base font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-[0.99]"
+            className="w-full rounded-2xl bg-violet-500 px-4 py-3 text-base font-semibold text-white shadow-md transition hover:bg-violet-600 active:scale-[0.99]"
           >
             登录 / 注册
           </button>
           <button
             type="button"
             onClick={() => navigate("/home")}
-            className="w-full rounded-2xl border border-orange-200 bg-white/90 px-4 py-3 text-base font-medium text-orange-700 shadow-sm transition active:scale-[0.99]"
+            className="w-full rounded-2xl border border-violet-200 bg-white/90 px-4 py-3 text-base font-medium text-violet-700 shadow-sm transition active:scale-[0.99]"
           >
             先逛逛
           </button>

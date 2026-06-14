@@ -24,7 +24,7 @@ export default function VerificationGate({ title = "需要完成实名认证" })
         type="button"
         onClick={handleVerify}
         disabled={isLoading}
-        className="mt-4 w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60 active:scale-[0.99]"
+        className="mt-4 w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white disabled:opacity-60 active:scale-[0.99]"
       >
         {isLoading ? "认证中..." : "提交实名认证（Mock）"}
       </button>

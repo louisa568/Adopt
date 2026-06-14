@@ -70,7 +70,7 @@ export default function PublishPage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] pb-28">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] pb-28">
       <section className="px-4 py-4">
         <header className="mb-3">
           <h1 className="text-lg font-semibold text-stone-800">发布送养</h1>
@@ -88,7 +88,7 @@ export default function PublishPage() {
                   setForm((prev) => ({ ...prev, imageUrl: event.target.value }))
                 }
                 placeholder="粘贴图片链接（可选）"
-                className="mt-1 w-full rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+                className="mt-1 w-full rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
               />
             </Field>
 
@@ -98,7 +98,7 @@ export default function PublishPage() {
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, name: event.target.value }))
                 }
-                className="mt-1 w-full rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+                className="mt-1 w-full rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
               />
             </Field>
 
@@ -152,7 +152,7 @@ export default function PublishPage() {
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, reason: event.target.value }))
                 }
-                className="mt-1 w-full resize-none rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+                className="mt-1 w-full resize-none rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
               />
             </Field>
 
@@ -163,7 +163,7 @@ export default function PublishPage() {
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, weakness: event.target.value }))
                 }
-                className="mt-1 w-full resize-none rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+                className="mt-1 w-full resize-none rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
               />
             </Field>
 
@@ -174,7 +174,7 @@ export default function PublishPage() {
                   setForm((prev) => ({ ...prev, district: event.target.value }))
                 }
                 placeholder="例如：西湖区转塘街道"
-                className="mt-1 w-full rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+                className="mt-1 w-full rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
               />
             </Field>
 
@@ -202,13 +202,13 @@ export default function PublishPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+              className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
             >
               提交发布
             </button>
 
             {message ? (
-              <p className="rounded-xl bg-orange-50 px-3 py-2 text-sm text-orange-700">
+              <p className="rounded-xl bg-violet-50 px-3 py-2 text-sm text-violet-700">
                 {message}
               </p>
             ) : null}
@@ -236,7 +236,7 @@ function SelectField({ label, value, options, onChange }) {
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 w-full rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+        className="mt-1 w-full rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
       >
         {options.map((option) => (
           <option key={option} value={option}>

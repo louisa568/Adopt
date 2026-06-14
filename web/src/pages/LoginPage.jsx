@@ -18,14 +18,14 @@ export default function LoginPage() {
 
   if (user.isLoggedIn) {
     return (
-      <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-8">
+      <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-8">
         <section className="rounded-2xl bg-white p-5 shadow-sm">
           <h1 className="text-lg font-semibold text-stone-800">你已经登录</h1>
           <p className="mt-2 text-sm text-stone-600">当前账号：{user.phone}</p>
           <button
             type="button"
             onClick={() => navigate("/home")}
-            className="mt-4 w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white active:scale-[0.99]"
+            className="mt-4 w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white active:scale-[0.99]"
           >
             返回首页
           </button>
@@ -65,13 +65,13 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
       <section className="rounded-2xl bg-white p-5 shadow-sm transition-all duration-300">
         <h1 className="text-xl font-semibold text-stone-800">登录 / 注册</h1>
         <p className="mt-1 text-sm text-stone-500">手机号 + 验证码登录（Mock）</p>
 
         <div className="mt-4 space-y-3">
-          <label className="block rounded-xl border border-orange-100 bg-orange-50/40 px-3 py-2">
+          <label className="block rounded-xl border border-violet-100 bg-violet-50/60 px-3 py-2">
             <span className="text-xs text-stone-500">手机号</span>
             <input
               value={phone}
@@ -82,7 +82,7 @@ export default function LoginPage() {
           </label>
 
           <div className="grid grid-cols-[1fr_auto] gap-2">
-            <label className="rounded-xl border border-orange-100 bg-orange-50/40 px-3 py-2">
+            <label className="rounded-xl border border-violet-100 bg-violet-50/60 px-3 py-2">
               <span className="text-xs text-stone-500">验证码</span>
               <input
                 value={code}
@@ -94,13 +94,13 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={handleSendCode}
-              className="rounded-xl border border-orange-200 bg-white px-3 text-sm font-medium text-orange-700 active:scale-[0.99]"
+              className="rounded-xl border border-violet-200 bg-white px-3 text-sm font-medium text-violet-700 active:scale-[0.99]"
             >
               获取验证码
             </button>
           </div>
 
-          <label className="flex items-start gap-2 rounded-xl border border-orange-100 bg-white px-3 py-2 text-sm text-stone-600">
+          <label className="flex items-start gap-2 rounded-xl border border-violet-100 bg-white px-3 py-2 text-sm text-stone-600">
             <input
               type="checkbox"
               checked={privacyAgreed}
@@ -113,14 +113,14 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={handleLogin}
-            className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+            className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
           >
             立即登录
           </button>
         </div>
 
         {message ? (
-          <p className="mt-3 rounded-lg bg-orange-50 px-3 py-2 text-xs text-orange-700">
+          <p className="mt-3 rounded-lg bg-violet-50 px-3 py-2 text-xs text-violet-700">
             {message}
           </p>
         ) : null}

@@ -14,7 +14,7 @@ export default function PublisherProfilePage() {
 
   if (!publisher) {
     return (
-      <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+      <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
         <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
           <p className="text-3xl">👤</p>
           <p className="mt-2 text-sm text-stone-600">未找到该发布者主页</p>
@@ -33,7 +33,7 @@ export default function PublisherProfilePage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
       <button
         type="button"
         onClick={() => navigate(-1)}
@@ -65,7 +65,7 @@ export default function PublisherProfilePage() {
         <div className="mt-2 space-y-2">
           {reasons.length > 0 ? (
             reasons.map((reason) => (
-              <p key={reason} className="rounded-xl bg-orange-50 px-3 py-2 text-sm text-stone-600">
+              <p key={reason} className="rounded-xl bg-violet-50 px-3 py-2 text-sm text-stone-600">
                 {reason}
               </p>
             ))
@@ -83,7 +83,7 @@ export default function PublisherProfilePage() {
               key={pet.id}
               type="button"
               onClick={() => navigate(`/pets/${pet.id}`)}
-              className="flex w-full items-center justify-between rounded-xl bg-orange-50 px-3 py-2 text-left active:scale-[0.99]"
+              className="flex w-full items-center justify-between rounded-xl bg-violet-50 px-3 py-2 text-left active:scale-[0.99]"
             >
               <span className="text-sm text-stone-700">{pet.name}</span>
               <span className="text-xs text-stone-500">查看详情</span>
@@ -95,7 +95,7 @@ export default function PublisherProfilePage() {
       <button
         type="button"
         onClick={startChat}
-        className="mt-4 w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+        className="mt-4 w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
       >
         发消息交流
       </button>
@@ -105,7 +105,7 @@ export default function PublisherProfilePage() {
 
 function InfoCard({ label, value }) {
   return (
-    <div className="rounded-xl bg-orange-50 px-3 py-2">
+    <div className="rounded-xl bg-violet-50 px-3 py-2">
       <p className="text-[11px] text-stone-500">{label}</p>
       <p className="text-sm font-semibold text-stone-700">{value}</p>
     </div>

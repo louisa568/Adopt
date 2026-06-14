@@ -26,7 +26,7 @@ export default function ApplicationFormPage() {
 
   if (!pet) {
     return (
-      <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+      <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
         <div className="rounded-2xl bg-white p-5 text-sm text-stone-600 shadow-sm">
           该宠物不存在或已下架。
         </div>
@@ -36,7 +36,7 @@ export default function ApplicationFormPage() {
 
   if (!user.isVerified) {
     return (
-      <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+      <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
         <VerificationGate title="填写领养申请前，请先完成实名认证" />
       </main>
     );
@@ -58,7 +58,7 @@ export default function ApplicationFormPage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-6">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-6">
       <header className="mb-4 flex items-center justify-between">
         <button
           type="button"
@@ -72,7 +72,7 @@ export default function ApplicationFormPage() {
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-        <article className="rounded-2xl border border-orange-200 bg-orange-50 p-4 text-xs leading-5 text-orange-700 shadow-sm">
+        <article className="rounded-2xl border border-violet-200 bg-violet-50 p-4 text-xs leading-5 text-violet-700 shadow-sm">
           流程说明：提交结构化申请表 → 送养人审核 → 线上签订标准化电子协议 →
           同城线下交接。
         </article>
@@ -117,7 +117,7 @@ export default function ApplicationFormPage() {
               setForm((prev) => ({ ...prev, note: event.target.value }))
             }
             placeholder="可填写作息、过往养宠经历等"
-            className="mt-2 w-full resize-none rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+            className="mt-2 w-full resize-none rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
           />
         </label>
 
@@ -144,13 +144,13 @@ export default function ApplicationFormPage() {
 
         <button
           type="submit"
-          className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+          className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
         >
           提交申请
         </button>
 
         {submitMsg ? (
-          <p className="rounded-xl bg-orange-50 px-3 py-2 text-sm text-orange-700">
+          <p className="rounded-xl bg-violet-50 px-3 py-2 text-sm text-violet-700">
             {submitMsg}
           </p>
         ) : null}
@@ -166,7 +166,7 @@ function FormSelect({ label, value, options, onChange }) {
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 w-full rounded-xl border border-orange-100 px-3 py-2 text-sm outline-none"
+        className="mt-2 w-full rounded-xl border border-violet-100 px-3 py-2 text-sm outline-none"
       >
         {options.map((option) => (
           <option key={option} value={option}>

@@ -4,9 +4,9 @@ import { useAppContext } from "../context/AppContext";
 
 function HealthItem({ label, done }) {
   return (
-    <li className="flex items-center justify-between rounded-xl bg-orange-50 px-3 py-2 text-sm">
+    <li className="flex items-center justify-between rounded-xl bg-violet-50 px-3 py-2 text-sm">
       <span className="text-stone-700">{label}</span>
-      <span className={done ? "text-emerald-700" : "text-amber-700"}>
+      <span className={done ? "text-emerald-700" : "text-violet-700"}>
         {done ? "已完成" : "待完成"}
       </span>
     </li>
@@ -27,14 +27,14 @@ export default function PetDetailsPage() {
 
   if (!pet) {
     return (
-      <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] px-4 py-8">
+      <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] px-4 py-8">
         <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
           <p className="text-3xl">🔎</p>
           <p className="mt-2 text-sm text-stone-600">未找到该宠物信息</p>
           <button
             type="button"
             onClick={() => navigate("/home")}
-            className="mt-4 rounded-xl bg-orange-500 px-4 py-2 text-sm font-semibold text-white active:scale-[0.99]"
+            className="mt-4 rounded-xl bg-violet-500 px-4 py-2 text-sm font-semibold text-white active:scale-[0.99]"
           >
             返回首页
           </button>
@@ -60,7 +60,7 @@ export default function PetDetailsPage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] pb-24">
+    <main className="mx-auto min-h-screen w-full max-w-md bg-[#f5f6fb] pb-24">
       <section className="relative">
         <img
           src={pet.images[currentImageIndex]}
@@ -105,7 +105,7 @@ export default function PetDetailsPage() {
             {pet.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-orange-50 px-2 py-1 text-xs text-orange-700"
+                className="rounded-full bg-violet-50 px-2 py-1 text-xs text-violet-700"
               >
                 {tag}
               </span>
@@ -115,7 +115,7 @@ export default function PetDetailsPage() {
             <button
               type="button"
               onClick={() => navigate(`/users/${publisher.id}`)}
-              className="mt-3 flex w-full items-center gap-2 rounded-xl border border-orange-100 px-3 py-2 text-left active:scale-[0.99]"
+              className="mt-3 flex w-full items-center gap-2 rounded-xl border border-violet-100 px-3 py-2 text-left active:scale-[0.99]"
             >
               <img
                 src={publisher.avatar}
@@ -164,12 +164,12 @@ export default function PetDetailsPage() {
         </article>
       </section>
 
-      <footer className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-md border-t border-orange-100 bg-white px-4 py-3">
+      <footer className="fixed inset-x-0 bottom-0 mx-auto w-full max-w-md border-t border-violet-100 bg-white px-4 py-3">
         {!user.isLoggedIn ? (
           <Link
             to="/login"
             state={{ redirectTo: `/pets/${pet.id}/apply` }}
-            className="block rounded-xl bg-orange-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+            className="block rounded-xl bg-violet-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
           >
             登录后填写领养申请
           </Link>
@@ -183,13 +183,13 @@ export default function PetDetailsPage() {
                   navigate(`/messages?user=${publisher.id}`);
                 }
               }}
-              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-center text-sm font-semibold text-orange-700 shadow-sm active:scale-[0.99]"
+              className="rounded-xl border border-violet-200 bg-white px-4 py-3 text-center text-sm font-semibold text-violet-700 shadow-sm active:scale-[0.99]"
             >
               先发消息
             </button>
             <Link
               to={`/pets/${pet.id}/apply`}
-              className="rounded-xl bg-orange-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+              className="rounded-xl bg-violet-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
             >
               填写领养申请
             </Link>
@@ -199,7 +199,7 @@ export default function PetDetailsPage() {
             type="button"
             onClick={startVerify}
             disabled={isVerifying}
-            className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-sm disabled:opacity-60 active:scale-[0.99]"
+            className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white shadow-sm disabled:opacity-60 active:scale-[0.99]"
           >
             {isVerifying ? "实名认证中..." : "先完成实名认证"}
           </button>
