@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import BottomNav from "./components/BottomNav";
+import LandingPage from "./components/LandingPage";
 import PetCard from "./components/PetCard";
 import PetDetailPage from "./components/PetDetailPage";
 import ProfilePage from "./components/ProfilePage";
@@ -18,6 +19,7 @@ function App() {
   const hasGeolocation =
     typeof navigator !== "undefined" && "geolocation" in navigator;
   const [city] = useState("上海");
+  const [hasEnteredFeed, setHasEnteredFeed] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const [pets, setPets] = useState(petList);
   const [selectedPetId, setSelectedPetId] = useState(null);
@@ -107,149 +109,170 @@ function App() {
   };
 
   const switchTab = (nextTab) => {
+    setHasEnteredFeed(true);
     setActiveTab(nextTab);
     if (nextTab !== "home") {
       setSelectedPetId(null);
     }
   };
 
+  const handleLoginRegister = () => {
+    setHasEnteredFeed(true);
+    setActiveTab("profile");
+  };
+
   return (
-    <main className="mx-auto min-h-screen w-full max-w-md bg-[#FFF9F1] pb-28">
-      <header className="sticky top-0 z-10 border-b border-amber-100 bg-[#FFF9F1]/95 px-4 py-4 backdrop-blur">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-orange-600">暖爪领养</p>
-            <h1 className="text-xl font-semibold text-stone-800">
-              {activeTab === "home"
-                ? selectedPet
-                  ? "宠物详情"
-                  : "同城领养信息流"
-                : activeTab === "publish"
-                  ? "发布领养"
-                  : "个人中心"}
-            </h1>
-          </div>
-          <div className="space-y-1 text-right">
-            <span className="block rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">
-              📍 {city}
-            </span>
-            <span
-              className={`text-xs ${
-                isVerified ? "text-emerald-700" : "text-stone-500"
-              }`}
-            >
-              {isVerified ? "已实名" : "未实名"}
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {activeTab === "home" && selectedPet ? (
-        <PetDetailPage
-          pet={selectedPet}
-          isVerified={isVerified}
-          hasApplied={adoptedPetIds.includes(selectedPet.id)}
-          onBack={() => setSelectedPetId(null)}
-          onVerify={handleVerify}
-          onApply={handleApplyAdoption}
+    <main
+      className={`mx-auto min-h-screen w-full max-w-md bg-[#FFF9F1] ${
+        hasEnteredFeed ? "pb-28" : ""
+      }`}
+    >
+      {!hasEnteredFeed ? (
+        <LandingPage
+          onLoginRegister={handleLoginRegister}
+          onBrowse={() => switchTab("home")}
         />
-      ) : null}
-
-      {activeTab === "home" && !selectedPet ? (
+      ) : (
         <>
-          <section className="space-y-3 px-4 py-4">
-            <div className="flex items-center justify-between rounded-xl bg-orange-50 px-3 py-2 text-sm">
-              <p className="text-stone-700">{locationTip}</p>
-              <button
-                type="button"
-                onClick={() => setSameCityOnly((value) => !value)}
-                className={`rounded-full px-3 py-1 text-xs font-medium ${
-                  sameCityOnly
-                    ? "bg-orange-500 text-white"
-                    : "border border-amber-200 bg-white text-stone-600"
-                }`}
-              >
-                {sameCityOnly ? "仅看同城" : "查看全部"}
-              </button>
-            </div>
-
-            <h2 className="text-base font-medium text-stone-700">快捷筛选</h2>
-            <div className="grid grid-cols-2 gap-2">
-              {filterGroups.map((group) => (
-                <label
-                  key={group.key}
-                  className="flex flex-col rounded-xl border border-amber-100 bg-white px-3 py-2"
-                >
-                  <span className="mb-1 text-xs text-stone-500">{group.label}</span>
-                  <select
-                    value={filters[group.key]}
-                    onChange={(event) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        [group.key]: event.target.value,
-                      }))
-                    }
-                    className="bg-transparent text-sm text-stone-800 focus:outline-none"
-                  >
-                    {group.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              ))}
-            </div>
-          </section>
-
-          <section className="space-y-3 px-4">
+          <header className="sticky top-0 z-10 border-b border-amber-100 bg-[#FFF9F1]/95 px-4 py-4 backdrop-blur">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-medium text-stone-700">待领养宠物</h2>
-              <span className="text-xs text-stone-500">共 {filteredPets.length} 条</span>
+              <div>
+                <p className="text-sm text-orange-600">暖爪领养</p>
+                <h1 className="text-xl font-semibold text-stone-800">
+                  {activeTab === "home"
+                    ? selectedPet
+                      ? "宠物详情"
+                      : "同城领养信息流"
+                    : activeTab === "publish"
+                      ? "发布领养"
+                      : "个人中心"}
+                </h1>
+              </div>
+              <div className="space-y-1 text-right">
+                <span className="block rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">
+                  📍 {city}
+                </span>
+                <span
+                  className={`text-xs ${
+                    isVerified ? "text-emerald-700" : "text-stone-500"
+                  }`}
+                >
+                  {isVerified ? "已实名" : "未实名"}
+                </span>
+              </div>
             </div>
+          </header>
 
-            {filteredPets.length > 0 ? (
-              <div className="space-y-3">
-                {filteredPets.map((pet) => (
-                  <PetCard
-                    key={pet.id}
-                    pet={pet}
-                    onViewDetail={(currentPet) => setSelectedPetId(currentPet.id)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-dashed border-amber-200 bg-white p-6 text-center text-sm text-stone-500">
-                当前筛选条件下暂无宠物，建议放宽条件后再试。
-              </div>
-            )}
-          </section>
+          {activeTab === "home" && selectedPet ? (
+            <PetDetailPage
+              pet={selectedPet}
+              isVerified={isVerified}
+              hasApplied={adoptedPetIds.includes(selectedPet.id)}
+              onBack={() => setSelectedPetId(null)}
+              onVerify={handleVerify}
+              onApply={handleApplyAdoption}
+            />
+          ) : null}
+
+          {activeTab === "home" && !selectedPet ? (
+            <>
+              <section className="space-y-3 px-4 py-4">
+                <div className="flex items-center justify-between rounded-xl bg-orange-50 px-3 py-2 text-sm">
+                  <p className="text-stone-700">{locationTip}</p>
+                  <button
+                    type="button"
+                    onClick={() => setSameCityOnly((value) => !value)}
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      sameCityOnly
+                        ? "bg-orange-500 text-white"
+                        : "border border-amber-200 bg-white text-stone-600"
+                    }`}
+                  >
+                    {sameCityOnly ? "仅看同城" : "查看全部"}
+                  </button>
+                </div>
+
+                <h2 className="text-base font-medium text-stone-700">快捷筛选</h2>
+                <div className="grid grid-cols-2 gap-2">
+                  {filterGroups.map((group) => (
+                    <label
+                      key={group.key}
+                      className="flex flex-col rounded-xl border border-amber-100 bg-white px-3 py-2"
+                    >
+                      <span className="mb-1 text-xs text-stone-500">{group.label}</span>
+                      <select
+                        value={filters[group.key]}
+                        onChange={(event) =>
+                          setFilters((prev) => ({
+                            ...prev,
+                            [group.key]: event.target.value,
+                          }))
+                        }
+                        className="bg-transparent text-sm text-stone-800 focus:outline-none"
+                      >
+                        {group.options.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ))}
+                </div>
+              </section>
+
+              <section className="space-y-3 px-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-base font-medium text-stone-700">待领养宠物</h2>
+                  <span className="text-xs text-stone-500">
+                    共 {filteredPets.length} 条
+                  </span>
+                </div>
+
+                {filteredPets.length > 0 ? (
+                  <div className="space-y-3">
+                    {filteredPets.map((pet) => (
+                      <PetCard
+                        key={pet.id}
+                        pet={pet}
+                        onViewDetail={(currentPet) => setSelectedPetId(currentPet.id)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-amber-200 bg-white p-6 text-center text-sm text-stone-500">
+                    当前筛选条件下暂无宠物，建议放宽条件后再试。
+                  </div>
+                )}
+              </section>
+            </>
+          ) : null}
+
+          {activeTab === "publish" ? (
+            <PublishPage
+              isVerified={isVerified}
+              city={city}
+              onVerify={handleVerify}
+              onPublish={handlePublish}
+            />
+          ) : null}
+
+          {activeTab === "profile" ? (
+            <ProfilePage
+              isVerified={isVerified}
+              onVerify={handleVerify}
+              myPublishedPets={myPublishedPets}
+              adoptedPets={adoptedPets}
+            />
+          ) : null}
+
+          <BottomNav
+            activeTab={activeTab}
+            onTabChange={switchTab}
+            onPublishClick={() => switchTab("publish")}
+          />
         </>
-      ) : null}
-
-      {activeTab === "publish" ? (
-        <PublishPage
-          isVerified={isVerified}
-          city={city}
-          onVerify={handleVerify}
-          onPublish={handlePublish}
-        />
-      ) : null}
-
-      {activeTab === "profile" ? (
-        <ProfilePage
-          isVerified={isVerified}
-          onVerify={handleVerify}
-          myPublishedPets={myPublishedPets}
-          adoptedPets={adoptedPets}
-        />
-      ) : null}
-
-      <BottomNav
-        activeTab={activeTab}
-        onTabChange={switchTab}
-        onPublishClick={() => switchTab("publish")}
-      />
+      )}
     </main>
   );
 }
