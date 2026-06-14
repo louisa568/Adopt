@@ -41,8 +41,7 @@ export default function LoginPage() {
       return;
     }
 
-    setCode("123456");
-    setMessage("验证码已发送，测试码默认填充为 123456。");
+    setMessage("验证码已发送（开发阶段占位）。请输入你收到的验证码后继续。");
   };
 
   const handleLogin = async () => {
@@ -51,8 +50,8 @@ export default function LoginPage() {
       return;
     }
 
-    if (code !== "123456") {
-      setMessage("验证码错误，请输入 123456。");
+    if (!code.trim()) {
+      setMessage("请输入验证码。");
       return;
     }
 
