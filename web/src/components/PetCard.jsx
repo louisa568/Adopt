@@ -10,7 +10,7 @@ function Tag({ children, highlighted = false }) {
   );
 }
 
-export default function PetCard({ pet }) {
+export default function PetCard({ pet, onViewDetail }) {
   return (
     <article className="overflow-hidden rounded-2xl border border-amber-100 bg-white shadow-sm">
       <img src={pet.image} alt={pet.name} className="h-44 w-full object-cover" />
@@ -35,6 +35,7 @@ export default function PetCard({ pet }) {
 
         <button
           type="button"
+          onClick={() => onViewDetail?.(pet)}
           className="w-full rounded-xl bg-orange-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-orange-600"
         >
           查看详情

@@ -10,6 +10,8 @@ export const petList = [
     vaccinated: true,
     health: "已驱虫、已接种 2 针疫苗",
     story: "雨天在停车场被救助，性格亲人，喜欢趴在腿上。",
+    requirements: "封窗、全屋纱窗，接受每月一次回访照片。",
+    contact: "微信：warmpaw001",
     image:
       "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=1200&q=80",
   },
@@ -24,6 +26,8 @@ export const petList = [
     vaccinated: true,
     health: "免疫齐全，体检无异常",
     story: "原主人搬家无法继续饲养，温顺听话，会定点上厕所。",
+    requirements: "每天至少遛狗 2 次，喂食天然粮，支持上门家访。",
+    contact: "微信：warmpaw002",
     image:
       "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80",
   },
@@ -38,6 +42,8 @@ export const petList = [
     vaccinated: true,
     health: "首针疫苗完成，待绝育",
     story: "在小区绿化带发现，活泼爱玩，适合有耐心的新手家庭。",
+    requirements: "需签订领养协议，不可散养，接受疫苗进度回访。",
+    contact: "微信：warmpaw003",
     image:
       "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?auto=format&fit=crop&w=1200&q=80",
   },
@@ -52,6 +58,8 @@ export const petList = [
     vaccinated: false,
     health: "等待基础体检中",
     story: "黑色兔兔，饮食规律，需领养人有小宠经验。",
+    requirements: "需准备兔笼与定期清洁，承诺不弃养。",
+    contact: "微信：warmpaw004",
     image:
       "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=1200&q=80",
   },
@@ -66,6 +74,8 @@ export const petList = [
     vaccinated: true,
     health: "已绝育，牙结石清理完成",
     story: "陪伴型小体犬，安静不拆家，适合作息规律家庭。",
+    requirements: "需有稳定作息，接受每月回访打卡。",
+    contact: "微信：warmpaw005",
     image:
       "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1200&q=80",
   },
