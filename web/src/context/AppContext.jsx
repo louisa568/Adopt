@@ -1,6 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useMemo, useState } from "react";
-import { mockPets, revisitTimeline } from "../data/mockData";
+import {
+  mockConversations,
+  mockPets,
+  mockPublishers,
+  revisitTimeline,
+} from "../data/mockData";
 
 const AppContext = createContext(null);
 
@@ -20,6 +25,7 @@ function sortFeedList(list) {
 
 export function AppProvider({ children }) {
   const [user, setUser] = useState({
+    userId: "visitor-0000",
     isLoggedIn: false,
     isVerified: false,
     phone: "",
@@ -28,14 +34,18 @@ export function AppProvider({ children }) {
     avatar:
       "https://images.unsplash.com/photo-1546961329-78bef0414d7c?auto=format&fit=crop&w=300&q=80",
   });
+  const [publishers] = useState(mockPublishers);
   const [pets, setPets] = useState(sortFeedList(mockPets));
   const [applications, setApplications] = useState([]);
-  const [hasPublishedPet, setHasPublishedPet] = useState(false);
+  const [conversations, setConversations] = useState(mockConversations);
 
   const login = ({ phone }) => {
+    const nextUserId = `user-${phone.slice(-4) || "0000"}`;
     setUser((prev) => ({
       ...prev,
+      userId: nextUserId,
       isLoggedIn: true,
+      isVerified: false,
       phone,
       nickname: `用户${phone.slice(-4) || "0000"}`,
     }));
@@ -44,6 +54,7 @@ export function AppProvider({ children }) {
   const logout = () => {
     setUser((prev) => ({
       ...prev,
+      userId: "visitor-0000",
       isLoggedIn: false,
       isVerified: false,
       phone: "",
@@ -69,6 +80,7 @@ export function AppProvider({ children }) {
   const publishPet = (payload) => {
     const newPet = {
       id: `pet-${Date.now()}`,
+      publisherId: user.userId,
       city: "杭州市",
       distanceKm: 0.6,
       publishedAt: new Date().toISOString(),
@@ -86,23 +98,117 @@ export function AppProvider({ children }) {
     };
 
     setPets((prev) => sortFeedList([newPet, ...prev]));
-    setHasPublishedPet(true);
   };
+
+  const openConversationWithUser = (peerUserId) => {
+    setConversations((prev) => {
+      if (prev[peerUserId]) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [peerUserId]: [],
+      };
+    });
+  };
+
+  const sendMessageToUser = (peerUserId, text) => {
+    if (!text.trim()) {
+      return;
+    }
+
+    const now = new Date().toISOString();
+    const userMsg = {
+      id: `msg-${Date.now()}`,
+      fromUserId: user.userId,
+      toUserId: peerUserId,
+      text: text.trim(),
+      createdAt: now,
+    };
+    const autoReply = {
+      id: `msg-${Date.now()}-reply`,
+      fromUserId: peerUserId,
+      toUserId: user.userId,
+      text: "收到啦，我会尽快回复你，感谢你认真沟通领养细节。",
+      createdAt: new Date(Date.now() + 1000).toISOString(),
+    };
+
+    setConversations((prev) => ({
+      ...prev,
+      [peerUserId]: [...(prev[peerUserId] || []), userMsg, autoReply],
+    }));
+  };
+
+  const currentUserProfile = useMemo(
+    () => ({
+      id: user.userId,
+      nickname: user.nickname,
+      city: "杭州市",
+      avatar: user.avatar,
+      bio: user.bio,
+    }),
+    [user.avatar, user.bio, user.nickname, user.userId]
+  );
+
+  const publisherDirectory = useMemo(() => {
+    const map = Object.fromEntries(publishers.map((item) => [item.id, item]));
+    map[currentUserProfile.id] = currentUserProfile;
+    return map;
+  }, [currentUserProfile, publishers]);
+
+  const myPublishedPets = useMemo(
+    () => pets.filter((pet) => pet.publisherId === user.userId),
+    [pets, user.userId]
+  );
+  const hasPublishedPet = myPublishedPets.length > 0;
+
+  const getUserById = (userId) => publisherDirectory[userId] || null;
+  const getPetsByPublisher = (publisherId) =>
+    pets.filter((pet) => pet.publisherId === publisherId);
+  const getConversationWithUser = (peerUserId) =>
+    (conversations[peerUserId] || []).slice().sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+
+  const conversationPeers = useMemo(() => {
+    return Object.keys(conversations).filter((peerUserId) => {
+      return getConversationWithUser(peerUserId).length > 0 || user.isLoggedIn;
+    });
+  }, [conversations, user.isLoggedIn]);
 
   const value = useMemo(
     () => ({
       user,
+      publishers,
       pets,
       applications,
+      conversations,
       hasPublishedPet,
+      myPublishedPets,
       revisitTimeline,
+      conversationPeers,
       login,
       logout,
       completeVerification,
       submitApplication,
       publishPet,
+      getUserById,
+      getPetsByPublisher,
+      getConversationWithUser,
+      openConversationWithUser,
+      sendMessageToUser,
     }),
-    [applications, hasPublishedPet, pets, user]
+    [
+      applications,
+      conversationPeers,
+      conversations,
+      hasPublishedPet,
+      myPublishedPets,
+      pets,
+      publishers,
+      user,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

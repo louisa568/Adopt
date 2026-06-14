@@ -1,6 +1,34 @@
+export const mockPublishers = [
+  {
+    id: "publisher-01",
+    nickname: "林小雨",
+    city: "杭州市",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80",
+    bio: "家里有一只原住民，做过3年救助志愿者。",
+  },
+  {
+    id: "publisher-02",
+    nickname: "陈阿北",
+    city: "杭州市",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+    bio: "希望每个毛孩子都能找到稳定家庭。",
+  },
+  {
+    id: "publisher-03",
+    nickname: "赵小莓",
+    city: "杭州市",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+    bio: "关注幼猫救助和回访，反对任何形式黑产。",
+  },
+];
+
 export const mockPets = [
   {
     id: "pet-1001",
+    publisherId: "publisher-01",
     name: "小橘",
     city: "杭州市",
     district: "西湖区",
@@ -27,6 +55,7 @@ export const mockPets = [
   },
   {
     id: "pet-1002",
+    publisherId: "publisher-02",
     name: "阿福",
     city: "杭州市",
     district: "滨江区",
@@ -52,6 +81,7 @@ export const mockPets = [
   },
   {
     id: "pet-1003",
+    publisherId: "publisher-03",
     name: "奶糖",
     city: "杭州市",
     district: "拱墅区",
@@ -76,6 +106,7 @@ export const mockPets = [
   },
   {
     id: "pet-1004",
+    publisherId: "publisher-02",
     name: "团子",
     city: "杭州市",
     district: "上城区",
@@ -106,3 +137,24 @@ export const revisitTimeline = [
   { month: "2026-05", photo: "https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?auto=format&fit=crop&w=600&q=80" },
   { month: "2026-04", photo: "https://images.unsplash.com/photo-1581888227599-779811939961?auto=format&fit=crop&w=600&q=80" },
 ];
+
+export const mockConversations = {
+  "publisher-01": [
+    {
+      id: "msg-01",
+      fromUserId: "publisher-01",
+      toUserId: "visitor-0000",
+      text: "你好，感谢关注小橘，建议先看看领养要求。",
+      createdAt: "2026-06-14T06:10:00.000Z",
+    },
+  ],
+  "publisher-02": [
+    {
+      id: "msg-02",
+      fromUserId: "publisher-02",
+      toUserId: "visitor-0000",
+      text: "阿福性格很稳定，欢迎先发申请表再沟通。",
+      createdAt: "2026-06-14T06:20:00.000Z",
+    },
+  ],
+};

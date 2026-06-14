@@ -16,12 +16,14 @@ function HealthItem({ label, done }) {
 export default function PetDetailsPage() {
   const { petId } = useParams();
   const navigate = useNavigate();
-  const { pets, user, completeVerification } = useAppContext();
+  const { pets, user, completeVerification, getUserById, openConversationWithUser } =
+    useAppContext();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [reportMsg, setReportMsg] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
 
   const pet = useMemo(() => pets.find((item) => item.id === petId), [petId, pets]);
+  const publisher = pet ? getUserById(pet.publisherId) : null;
 
   if (!pet) {
     return (
@@ -109,6 +111,25 @@ export default function PetDetailsPage() {
               </span>
             ))}
           </div>
+          {publisher ? (
+            <button
+              type="button"
+              onClick={() => navigate(`/users/${publisher.id}`)}
+              className="mt-3 flex w-full items-center gap-2 rounded-xl border border-orange-100 px-3 py-2 text-left active:scale-[0.99]"
+            >
+              <img
+                src={publisher.avatar}
+                alt={publisher.nickname}
+                className="h-8 w-8 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-xs font-medium text-stone-700">
+                  发布者：{publisher.nickname}
+                </p>
+                <p className="text-[11px] text-stone-500">点击查看 TA 的主页</p>
+              </div>
+            </button>
+          ) : null}
         </article>
 
         <article className="rounded-2xl bg-white p-4 shadow-sm">
@@ -153,12 +174,26 @@ export default function PetDetailsPage() {
             登录后填写领养申请
           </Link>
         ) : user.isVerified ? (
-          <Link
-            to={`/pets/${pet.id}/apply`}
-            className="block rounded-xl bg-orange-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
-          >
-            填写领养申请
-          </Link>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (publisher) {
+                  openConversationWithUser(publisher.id);
+                  navigate(`/messages?user=${publisher.id}`);
+                }
+              }}
+              className="rounded-xl border border-orange-200 bg-white px-4 py-3 text-center text-sm font-semibold text-orange-700 shadow-sm active:scale-[0.99]"
+            >
+              先发消息
+            </button>
+            <Link
+              to={`/pets/${pet.id}/apply`}
+              className="rounded-xl bg-orange-500 px-4 py-3 text-center text-sm font-semibold text-white shadow-sm active:scale-[0.99]"
+            >
+              填写领养申请
+            </Link>
+          </div>
         ) : (
           <button
             type="button"

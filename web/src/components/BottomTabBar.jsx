@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const tabs = [
   { key: "home", label: "首页", icon: "🏠", path: "/home" },
+  { key: "messages", label: "信息", icon: "💬", path: "/messages" },
   { key: "publish", label: "发布", icon: "➕", path: "/publish" },
   { key: "profile", label: "我的", icon: "👤", path: "/profile" },
 ];

@@ -3,16 +3,10 @@ import BottomTabBar from "../components/BottomTabBar";
 import { useAppContext } from "../context/AppContext";
 
 export default function ProfilePage() {
-  const { user, pets, applications, revisitTimeline, logout } = useAppContext();
+  const { user, myPublishedPets, applications, revisitTimeline, logout } =
+    useAppContext();
   const [activeTab, setActiveTab] = useState("my-pets");
-
-  const myPets = useMemo(
-    () =>
-      pets.filter(
-        (pet) => pet.contact === "通过平台私信联系" || pet.tags.includes("新发布")
-      ),
-    [pets]
-  );
+  const myPets = useMemo(() => myPublishedPets, [myPublishedPets]);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-md bg-[#fff8f1] pb-28">
