@@ -12,9 +12,13 @@ const filterGroups = [
 ];
 
 function App() {
+  const hasGeolocation =
+    typeof navigator !== "undefined" && "geolocation" in navigator;
   const [city] = useState("上海");
   const [sameCityOnly, setSameCityOnly] = useState(false);
-  const [locationTip, setLocationTip] = useState("正在获取位置授权...");
+  const [locationTip, setLocationTip] = useState(
+    hasGeolocation ? "正在获取位置授权..." : "设备不支持定位，已按默认城市推荐"
+  );
   const [filters, setFilters] = useState({
     category: "全部",
     gender: "全部",
@@ -56,8 +60,7 @@ function App() {
   }, [city, filters, sameCityOnly]);
 
   useEffect(() => {
-    if (!("geolocation" in navigator)) {
-      setLocationTip("设备不支持定位，已按默认城市推荐");
+    if (!hasGeolocation) {
       return;
     }
 
@@ -66,7 +69,7 @@ function App() {
       () => setLocationTip("定位失败，当前展示默认城市推荐"),
       { timeout: 6000 }
     );
-  }, []);
+  }, [hasGeolocation]);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-md bg-[#FFF9F1] pb-28">
