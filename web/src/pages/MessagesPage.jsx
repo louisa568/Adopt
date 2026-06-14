@@ -15,7 +15,7 @@ export default function MessagesPage() {
     openConversationWithUser,
     sendMessageToUser,
   } = useAppContext();
-  const [selectedUserId, setSelectedUserId] = useState(targetUserId || null);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [draft, setDraft] = useState("");
 
   const peerOptions = useMemo(() => {
@@ -27,28 +27,27 @@ export default function MessagesPage() {
     return [...base].filter((peerId) => peerId !== user.userId);
   }, [conversationPeers, publishers, targetUserId, user.userId]);
 
+  const effectiveSelectedUserId =
+    targetUserId || selectedUserId || peerOptions[0] || null;
+
   useEffect(() => {
-    if (targetUserId) {
-      setSelectedUserId(targetUserId);
-      openConversationWithUser(targetUserId);
-      return;
+    if (effectiveSelectedUserId) {
+      openConversationWithUser(effectiveSelectedUserId);
     }
+  }, [effectiveSelectedUserId, openConversationWithUser]);
 
-    if (!selectedUserId && peerOptions.length > 0) {
-      setSelectedUserId(peerOptions[0]);
-    }
-  }, [openConversationWithUser, peerOptions, selectedUserId, targetUserId]);
-
-  const messages = selectedUserId
-    ? getConversationWithUser(selectedUserId)
+  const messages = effectiveSelectedUserId
+    ? getConversationWithUser(effectiveSelectedUserId)
     : [];
-  const selectedUser = selectedUserId ? getUserById(selectedUserId) : null;
+  const selectedUser = effectiveSelectedUserId
+    ? getUserById(effectiveSelectedUserId)
+    : null;
 
   const send = () => {
-    if (!selectedUserId) {
+    if (!effectiveSelectedUserId) {
       return;
     }
-    sendMessageToUser(selectedUserId, draft);
+    sendMessageToUser(effectiveSelectedUserId, draft);
     setDraft("");
   };
 
@@ -63,7 +62,6 @@ export default function MessagesPage() {
         <aside className="space-y-2 overflow-y-auto pr-1">
           {peerOptions.map((peerId) => {
             const peer = getUserById(peerId);
-            const active = peerId === selectedUserId;
             return (
               <button
                 key={peerId}
@@ -73,7 +71,7 @@ export default function MessagesPage() {
                   openConversationWithUser(peerId);
                 }}
                 className={`w-full rounded-xl border px-2 py-2 text-left text-xs active:scale-[0.99] ${
-                  active
+                  peerId === effectiveSelectedUserId
                     ? "border-orange-300 bg-orange-50"
                     : "border-transparent bg-white shadow-sm"
                 }`}

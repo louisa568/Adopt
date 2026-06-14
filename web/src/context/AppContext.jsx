@@ -171,45 +171,31 @@ export function AppProvider({ children }) {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     });
 
-  const conversationPeers = useMemo(() => {
-    return Object.keys(conversations).filter((peerUserId) => {
-      return getConversationWithUser(peerUserId).length > 0 || user.isLoggedIn;
-    });
-  }, [conversations, user.isLoggedIn]);
+  const conversationPeers = Object.keys(conversations).filter((peerUserId) => {
+    return getConversationWithUser(peerUserId).length > 0 || user.isLoggedIn;
+  });
 
-  const value = useMemo(
-    () => ({
-      user,
-      publishers,
-      pets,
-      applications,
-      conversations,
-      hasPublishedPet,
-      myPublishedPets,
-      revisitTimeline,
-      conversationPeers,
-      login,
-      logout,
-      completeVerification,
-      submitApplication,
-      publishPet,
-      getUserById,
-      getPetsByPublisher,
-      getConversationWithUser,
-      openConversationWithUser,
-      sendMessageToUser,
-    }),
-    [
-      applications,
-      conversationPeers,
-      conversations,
-      hasPublishedPet,
-      myPublishedPets,
-      pets,
-      publishers,
-      user,
-    ]
-  );
+  const value = {
+    user,
+    publishers,
+    pets,
+    applications,
+    conversations,
+    hasPublishedPet,
+    myPublishedPets,
+    revisitTimeline,
+    conversationPeers,
+    login,
+    logout,
+    completeVerification,
+    submitApplication,
+    publishPet,
+    getUserById,
+    getPetsByPublisher,
+    getConversationWithUser,
+    openConversationWithUser,
+    sendMessageToUser,
+  };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
