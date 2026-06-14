@@ -11,13 +11,13 @@ npm run dev
 
 ## 2) Supabase 配置
 
-1. 复制环境变量模板：
+1. 复制环境变量模板（推荐写入 `.env.local`，避免误提交）：
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-2. 在 `.env` 中填入：
+2. 在 `.env.local` 中填入：
 
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
